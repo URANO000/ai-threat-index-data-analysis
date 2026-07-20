@@ -53,3 +53,27 @@ class Analyzer:
             "Columnas Booleanas": boolean_cols.tolist(),
             "Estadísticas": stats
         }
+    
+    # Identificar valores atípicos mediante el rango intercuartílico
+    def detect_outliers(self, df, column):
+        q1 = df[column].quantile(0.25)
+        q3 = df[column].quantile(0.75)
+
+        iqr = q3 - q1
+
+        lower_limit = q1 - 1.5 * iqr
+        upper_limit = q3 + 1.5 * iqr
+
+        outliers = df[
+            (df[column] < lower_limit) |
+            (df[column] > upper_limit)
+        ]
+
+        return {
+            "q1": q1,
+            "q3": q3,
+            "iqr": iqr,
+            "lower_limit": lower_limit,
+            "upper_limit": upper_limit,
+            "outliers": outliers
+        }
