@@ -66,13 +66,26 @@ def main():
         .sort_values("score", ascending=False)
     )
 
-    # Generar visualizaciones
     visualizer = Visualizer(df_clean)
+
+    # Distribuciones enriquecidas
     visualizer.histogram_exposure()
     visualizer.histogram_risk_score()
+
+    # Profesiones según exposición
+    visualizer.zero_exposure_professions()
+    visualizer.highest_exposure_professions()
+
+    # Profesiones según riesgo
+    visualizer.lowest_risk_professions()
+    visualizer.highest_risk_professions()
+
+    # Relaciones entre variables
+    visualizer.correlation_matrix()
+
+    # Valores atípicos
     visualizer.boxplot_exposure()
     visualizer.boxplot_risk_score()
-    visualizer.correlation_matrix()
 
 if __name__ == "__main__":
     main()
